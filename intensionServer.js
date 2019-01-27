@@ -27,8 +27,8 @@ function onData() {
 
 exports.intensionServer = IntensionStorage.create({
     title: 'can be Storage Server',
-    input: 'Intension',
-    output: 'Intension',
+    input: 'IntensionInput',
+    output: 'IntensionOutput',
     onData: onData
 });
 

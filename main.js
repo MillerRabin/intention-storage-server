@@ -1,2 +1,2 @@
-const intensionServer = require('./intensionServer');
+const intensionServer = require('./intensionServer.js');
 

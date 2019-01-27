@@ -14,6 +14,6 @@
   "license": "ISC",
   "homepage": "https://bitbucket.org/intensionteam/intension-storage-server#readme",
   "dependencies": {
-    "intension-storage": "0.0.6"
+    "intension-storage": "0.0.10"
   }
 }
