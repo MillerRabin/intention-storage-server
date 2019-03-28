@@ -1,0 +1,19 @@
+{
+  "directories": [
+    "\\\\192.168.0.110\\music\\mp3"
+  ],
+  "extensions": [
+    ".mp3", ".wma", ".flac", ".wav"
+  ],
+  "searchLinks": [
+    "https://en.wikipedia.org/w/index.php?search=QUERY&title=Special:Search&fulltext={query}",
+    "https://ru.wikipedia.org/w/index.php?search=QUERY&title=Special:Search&fulltext={query}"
+  ],
+  "fileNameParsers": [{
+    "regExp": "([a-zа-я\\s]+)-([a-zа-я\\s]+)",
+    "fields": ["artist", "title"]
+  }, {
+    "regExp": "([a-zа-я\\s]+)",
+    "fields": ["title"]
+  }]
+}

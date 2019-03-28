@@ -1,17 +1,22 @@
 const { IntentionStorage } = require('intention-storage');
+const controlMusic = require('./intentions/canControlMusic/main.js');
+
 
 const intentionStorage = new IntentionStorage();
+controlMusic.init(intentionStorage);
+
 const storageServer = intentionStorage.createServer({ address: 'localhost' });
+
 
 console.log(`Server is listening at ${storageServer.port}`);
 
 intentionStorage.createIntention({
     title: {
-        en: 'Need possibility to get structurized user input',
-        ru: 'Нужна возможность принимать структурированный пользовательский ввод'
+        en: 'Accept tasks',
+        ru: 'Принимаю задачи'
     },
-    input: 'Recognition',
-    output: 'Entities',
+    input: 'TaskInfo',
+    output: 'TaskOperationInfo',
     onData: async (status, intention, value) => {
         if (status == 'data')
             console.log(value);
