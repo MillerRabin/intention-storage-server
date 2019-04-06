@@ -1,23 +1,23 @@
 {
-  "name": "intensionstorageserver",
+  "name": "intentionstorageserver",
   "version": "0.0.1",
-  "description": "Node JS Intension Storage",
+  "description": "Node JS Intention Storage",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://millerrabin@bitbucket.org/intensionteam/intension-storage-server.git"
+    "url": "git+https://millerrabin@bitbucket.org/intentionteam/intention-storage-server.git"
   },
   "author": "MillerRabin",
   "license": "ISC",
-  "homepage": "https://bitbucket.org/intensionteam/intension-storage-server#readme",
+  "homepage": "https://bitbucket.org/intentionteam/intention-storage-server#readme",
   "dependencies": {
-    "intention-storage": "0.0.30",
+    "intention-storage": "0.0.33",
     "node-id3": "^0.1.7",
     "recursive-readdir": "^2.2.2",
-    "ws": "^6.1.4"
+    "ws": "^6.2.1"
   },
   "optionalDependencies": {
     "bufferutil": "^4.0.1",

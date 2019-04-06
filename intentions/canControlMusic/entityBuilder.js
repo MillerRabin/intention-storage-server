@@ -10,30 +10,69 @@ function readTags(filename) {
     return new Promise((resolve, reject) => {
         nodeID3.read(filename, function (err, data) {
             if (err != null) return reject(err);
+            if (data == false) return resolve(null);
             if ((data.artist == null) || (data.artist == '') ||
                 (data.title == null) || (data.title == '')) return resolve(null);
+            data.genre = (data.genre != null) ? data.genre.toLowerCase() : null;
+            console.log(data.genre);
             return resolve({
                 artist: data.artist.toLowerCase(),
                 title: data.title.toLowerCase(),
-                filename: filename
+                filename: filename,
+                genre: data.genre
             });
         });
     });
 }
 
+function getLanguage(word) {
+    const testRuReg = /[а-я]+/i;
+    const match = testRuReg.exec(word);
+    if (match == null) return 'en';
+    return 'ru';
+}
+
 function createArtist(entities, artist) {
+    const lang = getLanguage(artist);
     entities[artist] = {
-        words: artist,
-        songs: []
-    }
+        words: {},
+        songs: [],
+        type: 'type',
+        value: 'artist',
+        name: {
+            name: 'Music',
+            en: 'Music',
+            ru: 'Музыка'
+        },
+    };
+    entities[artist].words[lang] = artist;
 }
 
 function addSong(entities, data) {
+    const lang = getLanguage(data.title);
+    const tobj = {};
+    tobj[lang] = data.title;
+    let gobj = undefined;
+
+    if (data.genre != null) {
+        if (config.genres[data.genre] != null) {
+            gobj = config.genres[data.genre];
+        }
+        else {
+            gobj = {};
+            const gLang = getLanguage(data.genre);
+            gobj[gLang] = data.genre;
+        }
+    }
+
     entities[data.artist].songs.push({
         filename: data.filename,
-        words: data.title
+        words: tobj,
+        genre: gobj
     });
 }
+
+
 
 function checkValid(name) {
     let mname = name.trim().toLowerCase();
@@ -65,9 +104,10 @@ function getFromPath(filename) {
                 const ppf = path.parse(pf.dir);
                 res.artist = checkValid(ppf.name);
             }
+            res.filename = filename;
             if (res.artist == null) throw new Error(`Invalid artist ${filename}`);
             if (res.title == null) throw new Error(`Invalid title ${filename}`);
-            console.log(`${res.artist} - ${res.title}`);
+            console.log(`${res.artist} - ${res.title} - ${res.filename}`);
             return res;
         } catch (e) {
             console.log(e);
@@ -120,7 +160,7 @@ async function search(directory, results) {
     });
 }
 
-async function load() {
+exports.load = async () => {
     try {
         const buf = await fs.readFile(resultsFile);
         const js = buf.toString();
@@ -128,12 +168,12 @@ async function load() {
     } catch (e) {
         return { entities: {}, errors: {}, dirs: {} };
     }
-}
+};
 
 
 exports.build = async () => {
-    console.log('Started');
-    const results = await load();
+    console.log('Build started');
+    const results = await exports.load();
     for (let mDir of config.directories) {
         try {
             await search(mDir, results);
@@ -144,6 +184,7 @@ exports.build = async () => {
     }
     const buf = JSON.stringify(results);
     await fs.writeFile(resultsFile, buf);
-    console.log('Finished');
+    console.log('Build finished');
+    console.log('See results.json');
     return results;
 };

@@ -5,15 +5,85 @@
   "extensions": [
     ".mp3", ".wma", ".flac", ".wav"
   ],
-  "searchLinks": [
-    "https://en.wikipedia.org/w/index.php?search=QUERY&title=Special:Search&fulltext={query}",
-    "https://ru.wikipedia.org/w/index.php?search=QUERY&title=Special:Search&fulltext={query}"
-  ],
   "fileNameParsers": [{
     "regExp": "([a-zа-я\\s]+)-([a-zа-я\\s]+)",
     "fields": ["artist", "title"]
   }, {
     "regExp": "([a-zа-я\\s]+)",
     "fields": ["title"]
-  }]
+  }],
+  "genres": {
+    "(0)": {
+      "ru": "блюз",
+      "en": "blues"
+    },
+    "(3)": {
+      "ru": "танцевальная",
+      "en": "dance"
+    },
+    "(8)": {
+      "ru": "джаз",
+      "en": "jazz"
+    },
+    "(9)": {
+      "ru": "метал",
+      "en": "metal"
+    },
+    "(9)metal": {
+      "ru": "метал",
+      "en": "metal"
+    },
+    "(12)": {
+      "ru": "поп",
+      "en": "pop"
+    },
+    "(13)": {
+      "ru": "поп",
+      "en": "pop"
+    },
+    "(13)pop": {
+      "ru": "поп",
+      "en": "pop"
+    },
+    "(17)": {
+      "ru": "рок",
+      "en": "rock"
+    },
+    "(17)rock": {
+      "ru": "рок",
+      "en": "rock"
+    },
+    "(24)": {
+      "ru": "саундтрек",
+      "en": "soundtrack"
+    },
+    "(24)soundtrack": {
+      "ru": "саундтрек",
+      "en": "soundtrack"
+    },
+    "(31)": {
+      "ru": "транс",
+      "en": "trance"
+    },
+    "(33)": {
+      "ru": "инструментальная",
+      "en": "instrumental"
+    },
+    "(80)": {
+      "ru": "народный",
+      "en": "folk"
+    },
+    "(116)": {
+      "ru": "баллада",
+      "en": "ballad"
+    },
+    "(145)": {
+      "ru": "аниме",
+      "en": "anime"
+    },
+    "(145)anime": {
+      "ru": "аниме",
+      "en": "anime"
+    }
+  }
 }

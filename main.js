@@ -10,7 +10,7 @@ const storageServer = intentionStorage.createServer({ address: 'localhost' });
 
 console.log(`Server is listening at ${storageServer.port}`);
 
-intentionStorage.createIntention({
+/*intentionStorage.createIntention({
     title: {
         en: 'Accept tasks',
         ru: 'Принимаю задачи'
@@ -23,4 +23,4 @@ intentionStorage.createIntention({
         if (status == 'error')
             console.log(value);
     }
-});
+});*/
