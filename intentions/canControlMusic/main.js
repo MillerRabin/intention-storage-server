@@ -4,12 +4,12 @@ const gEntities = [
     {
         type: 'task',
         name: {
-            name: 'Play music',
+            general: 'Play music',
             en: 'play music',
             ru: 'включи музыку'
         },
         words: {
-            ru: 'включи',
+            ru: 'включить',
             en: 'play'
         },
         parameters: [{
@@ -26,10 +26,11 @@ const gEntities = [
 ];
 
 
-//entityBuilder.build();
+entityBuilder.build();
 
 exports.init = async (intentionStorage) => {
     const res = await entityBuilder.load();
+    gEntities[0].key = res.taskKey;
     const entities = res.entities;
     gEntities.push(...Object.values(entities));
     intentionStorage.createIntention({
@@ -56,9 +57,10 @@ exports.init = async (intentionStorage) => {
         input: 'Music',
         output: 'TaskOperationInfo',
         onData: async function onData(status, intention, value) {
-            if ((status != 'accept') && (status != 'data')) return;
+            if (status != 'data') return;
             try {
-                intention.send('data', this, { success: true, data: value });
+                console.log(intention.parameters);
+                intention.send('completed', this, { success: true, data: value });
             } catch (e) {
                 console.log(e);
                 intention.send('error', this, e);

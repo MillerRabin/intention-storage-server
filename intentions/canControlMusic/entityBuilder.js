@@ -3,6 +3,7 @@ const recursive = require('recursive-readdir');
 const path = require('path');
 const nodeID3 = require('node-id3');
 const fs = require('fs').promises;
+const IntentionStorage = require('intention-storage');
 
 const resultsFile = path.resolve(__dirname, 'results.json');
 
@@ -16,8 +17,8 @@ function readTags(filename) {
             data.genre = (data.genre != null) ? data.genre.toLowerCase() : null;
             console.log(data.genre);
             return resolve({
-                artist: data.artist.toLowerCase(),
-                title: data.title.toLowerCase(),
+                artist: data.artist.toLowerCase().trim(),
+                title: data.title.toLowerCase().trim(),
                 filename: filename,
                 genre: data.genre
             });
@@ -38,9 +39,11 @@ function createArtist(entities, artist) {
         words: {},
         songs: [],
         type: 'type',
-        value: 'artist',
+        key: IntentionStorage.generateUUID(),
+        value: artist,
+        kind: 'artist',
         name: {
-            name: 'Music',
+            general: 'Music',
             en: 'Music',
             ru: 'Музыка'
         },
@@ -53,7 +56,6 @@ function addSong(entities, data) {
     const tobj = {};
     tobj[lang] = data.title;
     let gobj = undefined;
-
     if (data.genre != null) {
         if (config.genres[data.genre] != null) {
             gobj = config.genres[data.genre];
@@ -182,6 +184,7 @@ exports.build = async () => {
             console.log(e);
         }
     }
+    results.taskKey = (results.taskKey == null) ? IntentionStorage.generateUUID() : results.taskKey;
     const buf = JSON.stringify(results);
     await fs.writeFile(resultsFile, buf);
     console.log('Build finished');
