@@ -13,7 +13,7 @@ const gEntities = [
             en: 'play'
         },
         parameters: [{
-            name: 'music',
+            general: 'music',
             ru: 'Какую музыку вы хотите?',
             en: 'What kind of music do you like?'
         }],
@@ -41,8 +41,10 @@ exports.init = async (intentionStorage) => {
         input: 'None',
         output: 'EntitiesInfo',
         onData: async function onData(status, intention, data) {
-            if (status == 'accept')
-                return gEntities;
+            if (status == 'accept') {
+                intention.send('data', this, gEntities);
+                return;
+            }
             if (status == 'error') {
                 console.log(data);
             }
@@ -60,7 +62,7 @@ exports.init = async (intentionStorage) => {
             if (status != 'data') return;
             try {
                 console.log(intention.parameters);
-                intention.send('completed', this, { success: true, data: value });
+                //intention.send('completed', this, { success: true, data: value });
             } catch (e) {
                 console.log(e);
                 intention.send('error', this, e);

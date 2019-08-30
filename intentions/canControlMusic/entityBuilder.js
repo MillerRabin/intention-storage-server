@@ -1,29 +1,25 @@
 const config = require('./config.js');
 const recursive = require('recursive-readdir');
 const path = require('path');
-const nodeID3 = require('node-id3');
 const fs = require('fs').promises;
 const IntentionStorage = require('intention-storage');
+const mm = require('music-metadata');
 
 const resultsFile = path.resolve(__dirname, 'results.json');
 
-function readTags(filename) {
-    return new Promise((resolve, reject) => {
-        nodeID3.read(filename, function (err, data) {
-            if (err != null) return reject(err);
-            if (data == false) return resolve(null);
-            if ((data.artist == null) || (data.artist == '') ||
-                (data.title == null) || (data.title == '')) return resolve(null);
-            data.genre = (data.genre != null) ? data.genre.toLowerCase() : null;
-            console.log(data.genre);
-            return resolve({
-                artist: data.artist.toLowerCase().trim(),
-                title: data.title.toLowerCase().trim(),
-                filename: filename,
-                genre: data.genre
-            });
-        });
-    });
+async function readTags(filename) {
+    const mdata = await mm.parseFile(filename);
+    const data = mdata.common;
+    if ((data.artist == null) || (data.artist == '') ||
+        (data.title == null) || (data.title == '')) return null;
+    const genre = data.genre.join(',').toLowerCase();
+    console.log(genre);
+    return {
+        artist: data.artist.toLowerCase().trim(),
+        title: data.title.toLowerCase().trim(),
+        filename: filename,
+        genre: genre
+    }
 }
 
 function getLanguage(word) {
@@ -67,11 +63,13 @@ function addSong(entities, data) {
         }
     }
 
-    entities[data.artist].songs.push({
+    const song = {
         filename: data.filename,
         words: tobj,
         genre: gobj
-    });
+    };
+    addSongToIndex(entities[data.artist].songs, song);
+    return song;
 }
 
 
@@ -82,9 +80,10 @@ function checkValid(name) {
     const digitalExp = /^\d+$/;
     let match = digitalExp.exec(mname);
     if (match != null) return null;
-    const nonReadExp = /[\[\]\-+()]+/;
+    const nonReadExp = /[\[\]+()]+/;
     match = nonReadExp.exec(mname);
-    if (match != null) return null;
+    if (match != null)
+        return null;
     return mname;
 }
 
@@ -117,6 +116,63 @@ function getFromPath(filename) {
     }
 }
 
+function addSongToIndex(songs, song) {
+    const index = songs.findIndex(s => s.filename == song.filename);
+    if (index == -1) {
+        songs.push(song);
+        return;
+    }
+    songs[index] = song;
+}
+
+function getName(entity) {
+    if (typeof(entity) == 'string') return entity;
+    if (entity == null) throw new Error('entity is null');
+    if (entity.name != null) return entity.name;
+    if (entity.en != null) return entity.en;
+    const ent = Object.entries(entity);
+    if (ent.length == 0) throw new Error('entity has no name');
+    return ent[0];
+}
+
+function addGenre(genres, song) {
+    if (song.genre != null) {
+        const name = getName(song.genre);
+        if (name == null) {
+            console.log(song.genre);
+            return;
+        }
+        if (genres[name] == null)
+            genres[name] = {
+                words: song.genre,
+                type: 'type',
+                value: name,
+                kind: "genre",
+                songs: [],
+                name: {
+                    general: 'Music',
+                    en: 'Music',
+                    ru: 'Музыка'
+                }
+            };
+        else {
+            addSongToIndex(genres[name].songs, song);
+        }
+    }
+}
+
+function buildGenres(entities) {
+    const genres = {};
+    for (const key in entities) {
+        if (!entities.hasOwnProperty(key)) continue;
+        const entity = entities[key];
+        for (const song of entity.songs) {
+            addGenre(genres, song);
+        }
+    }
+    return genres;
+}
+
 async function processFiles(results, files) {
     for (let file of files) {
         try {
@@ -126,14 +182,17 @@ async function processFiles(results, files) {
             if (data == null) throw new Error('not found');
             if (results.entities[data.artist] == null)
                 createArtist(results.entities, data.artist);
-            addSong(results.entities, data);
+            const song = addSong(results.entities, data);
             delete results.errors[file];
         } catch (e) {
+            if (e.code == "ENOENT") {
+                delete results.errors[file];
+                continue;
+            }
             results.errors[file] = file;
         }
     }
 }
-
 
 async function search(directory, results) {
     function ignore(file, stats) {
@@ -185,6 +244,7 @@ exports.build = async () => {
         }
     }
     results.taskKey = (results.taskKey == null) ? IntentionStorage.generateUUID() : results.taskKey;
+    results.genres = buildGenres(results.entities);
     const buf = JSON.stringify(results);
     await fs.writeFile(resultsFile, buf);
     console.log('Build finished');

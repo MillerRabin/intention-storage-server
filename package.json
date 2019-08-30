@@ -14,8 +14,8 @@
   "license": "ISC",
   "homepage": "https://bitbucket.org/intentionteam/intention-storage-server#readme",
   "dependencies": {
-    "intention-storage": "0.0.35",
-    "node-id3": "^0.1.7",
+    "intention-storage": "0.0.47",
+    "music-metadata": "^4.4.0",
     "recursive-readdir": "^2.2.2",
     "ws": "^6.2.1"
   },

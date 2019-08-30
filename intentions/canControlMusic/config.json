@@ -15,75 +15,98 @@
   "genres": {
     "(0)": {
       "ru": "блюз",
-      "en": "blues"
+      "en": "blues",
+      "name": "blues"
     },
     "(3)": {
       "ru": "танцевальная",
-      "en": "dance"
+      "en": "dance",
+      "name": "dance"
     },
     "(8)": {
       "ru": "джаз",
-      "en": "jazz"
+      "en": "jazz",
+      "name": "jazz"
     },
     "(9)": {
       "ru": "метал",
-      "en": "metal"
+      "en": "metal",
+      "name": "metal"
     },
     "(9)metal": {
       "ru": "метал",
-      "en": "metal"
+      "en": "metal",
+      "name": "metal"
     },
     "(12)": {
       "ru": "поп",
-      "en": "pop"
+      "en": "pop",
+      "name": "pop"
     },
     "(13)": {
       "ru": "поп",
-      "en": "pop"
+      "en": "pop",
+      "name": "pop"
     },
     "(13)pop": {
       "ru": "поп",
-      "en": "pop"
+      "en": "pop",
+      "name": "pop"
     },
     "(17)": {
       "ru": "рок",
-      "en": "rock"
+      "en": "rock",
+      "name": "rock"
     },
     "(17)rock": {
       "ru": "рок",
-      "en": "rock"
+      "en": "rock",
+      "name": "rock"
     },
     "(24)": {
       "ru": "саундтрек",
-      "en": "soundtrack"
+      "en": "soundtrack",
+      "name": "soundtrack"
     },
     "(24)soundtrack": {
       "ru": "саундтрек",
-      "en": "soundtrack"
+      "en": "soundtrack",
+      "name": "soundtrack"
     },
     "(31)": {
       "ru": "транс",
-      "en": "trance"
+      "en": "trance",
+      "name": "trance"
     },
     "(33)": {
       "ru": "инструментальная",
-      "en": "instrumental"
+      "en": "instrumental",
+      "name": "instrumental"
     },
     "(80)": {
       "ru": "народный",
-      "en": "folk"
+      "en": "folk",
+      "name": "folk"
     },
     "(116)": {
       "ru": "баллада",
-      "en": "ballad"
+      "en": "ballad",
+      "name": "ballad"
     },
     "(145)": {
       "ru": "аниме",
-      "en": "anime"
+      "en": "anime",
+      "name": "anime"
     },
     "(145)anime": {
       "ru": "аниме",
-      "en": "anime"
+      "en": "anime",
+      "name": "anime"
+    },
+    "фолк": {
+      "ru": "фолк",
+      "en": "folk",
+      "name": "folk"
     }
   },
   "replace": {
