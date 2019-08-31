@@ -1,4 +1,9 @@
 const entityBuilder = require('./entityBuilder.js');
+const musicConfig = {
+    directories: [
+        '\\\\192.168.0.110\\music\\mp3'
+    ]
+};
 
 const gEntities = [
     {
@@ -25,14 +30,19 @@ const gEntities = [
     }
 ];
 
-
-entityBuilder.build();
+async function getEntities() {
+    let res = await entityBuilder.getEntitiesData();
+    if (res.taskKey == null) {
+        await entityBuilder.build(musicConfig);
+        return await entityBuilder.getEntitiesData();
+    }
+    return res;
+}
 
 exports.init = async (intentionStorage) => {
-    const res = await entityBuilder.load();
-    gEntities[0].key = res.taskKey;
-    const entities = res.entities;
-    gEntities.push(...Object.values(entities));
+    const { taskKey, entities} = await getEntities();
+    gEntities[0].key = taskKey;
+    gEntities.push(...entities);
     intentionStorage.createIntention({
         title: {
             en: 'Music types for music control',

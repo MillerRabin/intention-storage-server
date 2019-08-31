@@ -1,7 +1,4 @@
 {
-  "directories": [
-    "\\\\192.168.0.110\\music\\mp3"
-  ],
   "extensions": [
     ".mp3", ".wma", ".flac", ".wav"
   ],
@@ -107,6 +104,21 @@
       "ru": "фолк",
       "en": "folk",
       "name": "folk"
+    },
+    "folk": {
+      "ru": "фолк",
+      "en": "folk",
+      "name": "folk"
+    },
+    "pop": {
+      "ru": "поп",
+      "en": "pop",
+      "name": "pop"
+    },
+    "rock": {
+      "ru": "рок",
+      "en": "rock",
+      "name": "rock"
     }
   },
   "replace": {
