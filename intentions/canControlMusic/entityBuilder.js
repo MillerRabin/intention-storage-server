@@ -196,7 +196,7 @@ function buildGenres(entities) {
     return genres;
 }
 
-async function buildSongs(results, files) {
+async function buildSongs(results, files=[]) {
     if (results.songs == null) results.songs = {};
     if (results.errors == null) results.errors = {};
     for (let file of files) {
