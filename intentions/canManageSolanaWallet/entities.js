@@ -2,6 +2,19 @@ const IntentionStorage = require("intention-storage");
 
 module.exports = [
     {
+        type: 'type',
+        name: {
+            general: 'SolanaContact',
+            en: 'Solana contact',
+            ru: 'Контакт Солана'
+        },
+        words: [{
+            ru: 'Алихать',
+            en: 'Alihan'
+        }],
+        value: '8EkUrtaweNaB4u7sDYRhNf8bstZYShxnxGxuUTmmGUfp'
+    },
+    {
       type: "task",
       key: IntentionStorage.generateUUID(),
       name: {
@@ -45,17 +58,5 @@ module.exports = [
           output: 'SolanaResult',
           value: 'send'
       }]
-    }, {
-        type: 'type',
-        name: {
-            general: 'SolanaContact',
-            en: 'Solana contact',
-            ru: 'Контакт Солана'
-        },
-        words: [{
-            ru: 'Алихан',
-            en: 'Alihan'
-        }],
-        value: '8EkUrtaweNaB4u7sDYRhNf8bstZYShxnxGxuUTmmGUfp'
-    },
+    }
   ];
