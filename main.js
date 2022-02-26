@@ -6,7 +6,7 @@ const intentionStorage = new IntentionStorage();
 controlMusic.init(intentionStorage);
 solanaWallet.init(intentionStorage);
 
-intentionStorage.createServer({ address: "10 91 5 4", useSocket: false, useWebRTC: true }).then((storageServer) => {
+intentionStorage.createServer({ address: "10.91.5.4", useSocket: false, useWebRTC: true }).then((storageServer) => {
     const connParams = [];
     if (storageServer.webRTCAnswer != null) connParams.push("webRTC");
     if (storageServer.socketServer != null)
