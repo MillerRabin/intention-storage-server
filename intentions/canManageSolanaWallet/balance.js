@@ -6,8 +6,12 @@ async function getBalance() {
     solanaWeb3.clusterApiUrl("mainnet-beta"),
     "confirmed"
   );
-  const balance = await connection.getBalance(constants.keypair.publicKey);
-  return balance / constants.SOL_DIV;
+
+  return await exports.getBalance(connection) / solanaWeb3.LAMPORTS_PER_SOL;
+}
+
+exports.getBalance = async(connection) => {
+  return await connection.getBalance(constants.keypair.publicKey);
 }
 
 exports.init = async (intentionStorage, consIntention) => {

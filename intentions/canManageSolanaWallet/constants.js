@@ -8,6 +8,5 @@ const keypair = solanaWeb3.Keypair.fromSecretKey(pKey);
 
 
 module.exports = {
-    SOL_DIV: 1000000000,
     keypair
 };

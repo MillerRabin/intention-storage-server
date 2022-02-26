@@ -3,6 +3,7 @@ const IntentionStorage = require("intention-storage");
 module.exports = [
     {
         type: 'type',
+        key: IntentionStorage.generateUUID(),
         name: {
             general: 'SolanaContact',
             en: 'Solana contact',
@@ -11,9 +12,64 @@ module.exports = [
         words: [{
             ru: 'Алихать',
             en: 'Alihan'
+        }, {
+            ru: 'Алихануть'
         }],
         value: '8EkUrtaweNaB4u7sDYRhNf8bstZYShxnxGxuUTmmGUfp'
     },
+    {
+        type: 'type',
+        key: IntentionStorage.generateUUID(),
+        name: {
+            general: 'SolanaAmount',
+            en: 'Solana amount',
+            ru: 'Количество денег в sol'
+        },
+        words: [{
+            ru: 'на еда',
+            en: 'for food'
+        }],
+        value: '0.01'
+    }, {
+        type: 'type',
+        key: IntentionStorage.generateUUID(),
+        name: {
+            general: 'SolanaAmount',
+            en: 'Solana amount',
+            ru: 'Количество денег в sol'
+        },
+        words: [{
+            ru: 'один сол',
+            en: 'one sol'
+        }],
+        value: '1'
+    }, {
+        type: 'type',
+        key: IntentionStorage.generateUUID(),
+        name: {
+            general: 'SolanaAmount',
+            en: 'Solana amount',
+            ru: 'Количество денег в sol'
+        },
+        words: [{
+            ru: 'два сола',
+            en: 'two sols'
+        }],
+        value: '2'
+    }, {
+        type: 'type',
+        key: IntentionStorage.generateUUID(),
+        name: {
+            general: 'SolanaAmount',
+            en: 'Solana amount',
+            ru: 'Количество денег в sol'
+        },
+        words: [{
+            ru: '5 сол',
+            en: 'five sols'
+        }],
+        value: '5'
+    }, 
     {
       type: "task",
       key: IntentionStorage.generateUUID(),
@@ -48,10 +104,14 @@ module.exports = [
           en: 'Transfer money'
       },
       parameters: [{
-          general: ['SolanaContact'],
+          general: 'SolanaContact',
           ru: 'Кому?',
           en: 'Where?'
-      }],
+      }, {
+        general: 'SolanaAmount',
+        ru: 'Сколько?',
+        en: 'How much?'
+    }],
       intentions: [{
           title: 'Tranfer money to recipient',
           input: 'TaskOperationInfo',
